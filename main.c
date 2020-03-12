@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <math.h>
 // Fonction pour echanger deux entiers
 void echange(int *a, int *b) {
     int temp = *a;
@@ -142,8 +142,6 @@ void libere_experience(EXPERIENCE *xp) {
 int *marqueurs_negatifs1(EXPERIENCE *xp, int *cptOP) {
 
     *cptOP = 0;
-    int cptOP1 = 0;
-    int cptOP2 = 0;
     int n = xp->m;
     int npos = xp->p;
 //    int *tabRes[xp->m - xp->p];
@@ -156,17 +154,15 @@ int *marqueurs_negatifs1(EXPERIENCE *xp, int *cptOP) {
             if (xp->marqueurs[i] == xp->marqueurs_positifs[j]) {
                 bool = 0;
             }
-            cptOP1 += 1;
+            *cptOP += 1;
         }
         if (bool == 1) {
             res[indent] = xp->marqueurs[i];
             indent += 1;
         }
-        cptOP2 += 1;
     }
 
 //    affiche(tabRes, xp->m - xp->p);
-    *cptOP = cptOP1 * cptOP2;
     return res;
 }
 
@@ -206,8 +202,6 @@ int *marqueurs_negatifs2(EXPERIENCE *xp, int *cptOP) {
     affiche(xp->marqueurs_positifs, xp->p);
 
     int n = 0;
-    int cptOP1 = 0;
-    int cptOP2 = 0;
 
     for (int i = 0; i < xp->m - 1; i++) {
         int val = xp->marqueurs[i];
@@ -224,16 +218,14 @@ int *marqueurs_negatifs2(EXPERIENCE *xp, int *cptOP) {
             } else {
                 x = 1;
             }
-            cptOP1 += 1;
+            *cptOP += 1;
         }
         if (x != 1) {
             res[n] = xp->marqueurs[i];
             n++;
         }
-        cptOP2 += 1;
     }
 
-    *cptOP = cptOP1 * cptOP2;
     return res;
 }
 
@@ -304,8 +296,6 @@ int *marqueurs_negatifs3(EXPERIENCE *xp, int *cptOP) {
         }
         *cptOP += 1;
     }
-
-
     return res;
 }
 
@@ -320,6 +310,19 @@ void test(int p, int m) {
     affiche(xp.marqueurs, m);
     printf("\nMarqueurs positifs :\n");
     affiche(xp.marqueurs_positifs, p);
+
+    printf("voici les complexités en fonctions de p votre valeur d'entrée m :\n");
+
+        // calcul du nombre maximal d'itération pour la recherche dichotomique
+    int iter = 0;
+        do{
+            iter += 1;
+        }while(m >= pow(2, iter)) ;
+
+        printf("%d", iter);
+    for (int i = 0; i <= m ; i++){
+        printf("%d %d %i %i %i\n", m, i, i * m, iter * i, m);
+    }
 
     // Test strategie 1
     printf("\nStrategie 1\n");
